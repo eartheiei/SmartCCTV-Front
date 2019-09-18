@@ -5,9 +5,7 @@ class Header extends Component {
     render() {
         return (
             <div style={styles.container}>
-                <TextHeader>
-                    Dashboard
-                </TextHeader>
+                Dashboard
             </div>
         )
     }
@@ -15,7 +13,7 @@ class Header extends Component {
 
 const styles = {
     container: {
-        backgroundColor: "red",
+        backgroundColor: "#f0f3f5",
         width: "100%",
         height: "50px"
     }
