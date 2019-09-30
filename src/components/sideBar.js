@@ -57,6 +57,7 @@ const styles = {
     position: "relative",
     display: "block",
     padding: "10px 15px",
+    cursor:"pointer",
     backgroundColor: "#2f353a", //"transparent",
     ':hover' : {
       backgroundColor: "#2f353a"
