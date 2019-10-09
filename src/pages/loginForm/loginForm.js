@@ -1,5 +1,6 @@
 import React from "react";
 import auth from "../../firebase";
+import Home from '../home'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -51,21 +52,24 @@ class LoginForm extends React.Component {
   };
 
   logout = e => {
-    e.preventDefault();
+    e.preventDefault()
     auth.signOut().then(response => {
       this.setState({
         currentUser: null
-      });
-    });
-  };
+      })
+    })
+    console.log("currentUser",this.currentUser)
+  }
 
   render() {
     const { message, currentUser } = this.state;
 
     if (currentUser) {
+      console.log(currentUser)
       return (
         <div>
           <p>Hello {currentUser.email}</p>
+          <Home logout={this.logout}/>
           {console.log("currentUser",currentUser)}
           <button onClick={this.logout}>Logout</button>
         </div>

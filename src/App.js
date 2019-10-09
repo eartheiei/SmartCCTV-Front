@@ -15,7 +15,7 @@ export default class App extends Component {
       //   <LoginForm />
       // </div>
       <div className="App container">
-        <Route path="/" component={LoginForm} />
+        <Route exact path="/" component={LoginForm} />
       </div>
     )
   }
