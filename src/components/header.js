@@ -1,13 +1,10 @@
-import React, { Component, StyleSheet } from 'react'
-import { TextHeader } from './common/TextHeader'
+import React, { Component } from 'react'
 
 class Header extends Component {
     render() {
         return (
             <div style={styles.container}>
-                <TextHeader>
-                    Dashboard
-                </TextHeader>
+                Header
             </div>
         )
     }
@@ -15,9 +12,9 @@ class Header extends Component {
 
 const styles = {
     container: {
-        backgroundColor: "red",
+        backgroundColor: "#f0f3f5",
         width: "100%",
-        height: "50px"
+        height: "60px"
     }
 };
 
