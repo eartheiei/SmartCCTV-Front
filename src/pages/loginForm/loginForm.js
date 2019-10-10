@@ -1,6 +1,7 @@
 import React from "react";
 import auth from "../../firebase";
 import Home from '../home'
+import { Link } from 'react-router-dom'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class LoginForm extends React.Component {
         currentUser: null
       })
     })
-    console.log("currentUser",this.currentUser)
+    console.log("logout Done!")
   }
 
   render() {
@@ -68,10 +69,7 @@ class LoginForm extends React.Component {
       console.log(currentUser)
       return (
         <div>
-          <p>Hello {currentUser.email}</p>
-          <Home logout={this.logout}/>
-          {console.log("currentUser",currentUser)}
-          <button onClick={this.logout}>Logout</button>
+          <Home logout={this.logout} currentUser={this.state.currentUser}/>
         </div>
       );
     }

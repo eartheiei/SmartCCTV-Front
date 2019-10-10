@@ -1,52 +1,101 @@
-import React, { Component } from 'react'
-import { Route , NavLink} from 'react-router-dom'
-import LoginForm from '../loginForm'
-
-const About = () => <h1>About</h1>
-const Post = () => <h1>Post</h1>
-const Project = () => <h1>Project</h1>
+import React, { Component } from "react";
+import { Route, NavLink } from "react-router-dom";
+import LoginForm from "../loginForm";
+import Search from "../search";
+import LiveCam from "../liveCam";
+import Register from "../register";
+import Setting from "../setting";
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: "liveCam"
+    };
+  }
+
+  renderPage = page => {
+    switch (page) {
+      case "search":
+        return <Search />;
+      case "register":
+        return <Register />;
+      case "setting":
+        return <Setting />;
+      default:
+        return <LiveCam />;
     }
+  };
 
-    // onClicklogout = () => (
-    //     this.props.logout()
-
-    // )
+  changePage = temp => {
+    this.setState({
+      temp
+    });
+  };
 
   render() {
+    const { logout, currentUser } = this.props;
+    const { page } = this.state;
     return (
-      <div className="my-app">
-        <nav className="navbar is-light" role="navigation" aria-label="main navigation">
-          <div className="container">
-            <div className="navbar-brand">
-              {/* <a className="navbar-item">
-                <img src="../../asset/cctv.png" alt="CCTV LOGO" width="28" height="28" />
-              </a> */}
+      <div>
+        {console.log(page)}
+        <nav class="navbar is-white">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item brand-text" href="../">
+                SmartCCTV
+              </a>
+              <div class="navbar-burger burger" data-target="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </div>
-            <div className="navbar-end">
-                <NavLink to="/home" activeClassName="is-active" className="navbar-item">Home</NavLink>
-                <NavLink to="/post" activeClassName="is-active" className="navbar-item">Post</NavLink>
-                <NavLink to="/project" activeClassName="is-active" className="navbar-item">Project</NavLink>
-                <NavLink to="/about" activeClassName="is-active" className="navbar-item">About</NavLink>
-                {/* <a onClick={this.onClicklogout()} className="navbar-item">Logout</a> */}
+            <div id="navMenu" class="navbar-menu">
+              <div class="navbar-end">
+                <a class="navbar-item">{currentUser.email}</a>
+                <a class="navbar-item" onClick={logout}>
+                  Logout
+                </a>
+              </div>
             </div>
           </div>
         </nav>
-        <div className="App container">
-          <Route path="/home" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/post" component={Post} />
-          <Route path="/project" component={Project} />
-          {/* <Route path="/" component={LoginForm} /> */}
+        <div class="container">
+          <div class="columns">
+            <div class="column is-one-quarter">
+              <div class="column">
+                <aside class="menu is-hidden-mobile">
+                  <p class="menu-label">General</p>
+                  <ul class="menu-list">
+                    <li>
+                      <a>Live Camera</a>
+                    </li>
+                  </ul>
+                  <p class="menu-label">Administration</p>
+                  <ul class="menu-list">
+                    <li>
+                      <a>Search</a>
+                    </li>
+                    <li>
+                      <a>Register</a>
+                    </li>
+                  </ul>
+                  <p class="menu-label">Setting</p>
+                  <ul class="menu-list">
+                    <li>
+                      <a>Setting</a>
+                    </li>
+                  </ul>
+                </aside>
+              </div>
+            </div>
+            <div class="column">{this.renderPage(page)}</div>
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Home
+export default Home;
