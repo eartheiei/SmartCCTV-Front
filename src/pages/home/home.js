@@ -27,18 +27,11 @@ class Home extends Component {
     }
   };
 
-  changePage = temp => {
-    this.setState({
-      temp
-    });
-  };
-
   render() {
     const { logout, currentUser } = this.props;
     const { page } = this.state;
     return (
       <div>
-        {console.log(page)}
         <nav class="navbar is-white">
           <div class="container">
             <div class="navbar-brand">
@@ -69,22 +62,22 @@ class Home extends Component {
                   <p class="menu-label">General</p>
                   <ul class="menu-list">
                     <li>
-                      <a>Live Camera</a>
+                      <a onClick={()=>this.setState({page: "liveCam"})}>Live Camera</a>
                     </li>
                   </ul>
                   <p class="menu-label">Administration</p>
                   <ul class="menu-list">
                     <li>
-                      <a>Search</a>
+                      <a onClick={()=>this.setState({page: "search"})}>Search</a>
                     </li>
                     <li>
-                      <a>Register</a>
+                      <a onClick={()=>this.setState({page: "register"})}>Register</a>
                     </li>
                   </ul>
                   <p class="menu-label">Setting</p>
                   <ul class="menu-list">
                     <li>
-                      <a>Setting</a>
+                      <a onClick={()=>this.setState({page: "setting"})}>Setting</a>
                     </li>
                   </ul>
                 </aside>
