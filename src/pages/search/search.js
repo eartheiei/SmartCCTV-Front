@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Search extends Component {
     render(){
         return (
-            <span>Search</span>
+            <label className="label">Search</label>
         )
     }
 }
