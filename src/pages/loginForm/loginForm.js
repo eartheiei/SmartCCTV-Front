@@ -1,7 +1,7 @@
 import React from "react";
 import auth from "../../firebase";
-import Home from '../home'
-import { Link } from 'react-router-dom'
+import Home from "../home";
+import { Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -53,68 +53,85 @@ class LoginForm extends React.Component {
   };
 
   logout = e => {
-    e.preventDefault()
+    e.preventDefault();
     auth.signOut().then(response => {
       this.setState({
         currentUser: null
-      })
-    })
-    console.log("logout Done!")
-  }
+      });
+    });
+    console.log("logout Done!");
+  };
 
   render() {
     const { message, currentUser } = this.state;
 
     if (currentUser) {
-      console.log(currentUser)
+      console.log(currentUser);
       return (
         <div>
-          <Home logout={this.logout} currentUser={this.state.currentUser}/>
+          <Home logout={this.logout} currentUser={this.state.currentUser} />
         </div>
       );
     }
 
     return (
-      <section className="section container">
-        <div className="columns is-centered">
-          <div className="column is-half">
-            <form onSubmit={this.onSubmit}>
-              <div className="field">
-                <label className="label">Email</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="email"
-                    name="email"
-                    onChange={this.onChange}
-                  />
-                </div>
+      <div>
+        <section className="hero is-primary is-medium">
+          <div className="hero-body">
+            <div className="container">
+              <div className="columns is-centered">
+                <label className="title is-1">Smart CCTV</label>
               </div>
+              <div className="columns is-centered">
+                <div className="column is-half">
+                  <form onSubmit={this.onSubmit}>
+                    <div className="field">
+                      <label className="label">Email</label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="email"
+                          name="email"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    </div>
 
-              <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="password"
-                    name="password"
-                    onChange={this.onChange}
-                  />
+                    <div className="field">
+                      <label className="label">Password</label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="password"
+                          name="password"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    </div>
+                    {message ? (
+                      <p className="help is-danger">{message}</p>
+                    ) : null}
+                    <div className="field is-grouped">
+                      <div className="control">
+                        <button className="button is-link">Submit</button>
+                      </div>
+                      <div className="control">
+                        <button className="button is-text">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-              {message ? <p className="help is-danger">{message}</p> : null}
-              <div className="field is-grouped">
-                <div className="control">
-                  <button className="button is-link">Submit</button>
-                </div>
-                <div className="control">
-                  <button className="button is-text">Cancel</button>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+        <footer>
+          <section className="hero is-primary">
+            <div className="hero-body">
+            </div>
+          </section>
+        </footer>
+      </div>
     );
   }
 }
