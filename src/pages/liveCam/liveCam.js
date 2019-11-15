@@ -4,6 +4,7 @@ export default class LiveCam extends Component {
   render() {
     return (
       <div>
+        <label className="label">Live Camera</label>
         <div>
           <img
             border="0"

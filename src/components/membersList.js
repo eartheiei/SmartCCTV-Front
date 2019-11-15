@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Webcam from "react-webcam";
 
 export default class MembersList extends Component {
   state = {
@@ -16,11 +17,32 @@ export default class MembersList extends Component {
   }
 
   render() {
-      const { members } = this.state
+    const { members } = this.state;
+    console.log(members)
     return (
-      <ul>
-          {members.map(member => <li key={member.Mem_ID}>{member.Name}</li>)}
-      </ul>
+      <div>
+        <table className="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Member ID</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Video</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map(member =>(
+              <tr key={member.Mem_ID}>
+                <td>{member.Mem_ID}</td>
+                <td>{member.User_ID}</td>
+                <td>{member.Name}</td>
+                <td>{member.Face}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* <Webcam mirrored="true"/> */}
+      </div>
     );
   }
 }

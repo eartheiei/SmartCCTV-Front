@@ -71,7 +71,7 @@ class Home extends Component {
                       <a onClick={()=>this.setState({page: "search"})}>Search</a>
                     </li>
                     <li>
-                      <a onClick={()=>this.setState({page: "register"})}>Register</a>
+                      <a onClick={()=>this.setState({page: "register"})}>Member Management</a>
                     </li>
                   </ul>
                   <p class="menu-label">Setting</p>

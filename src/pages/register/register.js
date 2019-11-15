@@ -6,8 +6,12 @@ export default class Register extends Component {
   render() {
     return (
       <div>
-        <span>Register</span>
-        <MembersInput/>
+        <label className="label">Member Management</label>
+        <div className="columns is-centered">
+          <div className="column is-half">
+            <MembersInput />
+          </div>
+        </div>
         <MemberList />
       </div>
     );
