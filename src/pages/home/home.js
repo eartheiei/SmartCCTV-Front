@@ -5,13 +5,33 @@ import Search from "../search";
 import LiveCam from "../liveCam";
 import Register from "../register";
 import Setting from "../setting";
+import jwt_decode from 'jwt-decode'
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "liveCam"
+      page: "liveCam",
+      first_name: '',
+      last_name: '',
+      email: ''
     };
+  }
+
+  componentDidMount() {
+    const token = localStorage.usertoken
+    const decoeded = jwt_decode(token)
+    this.setState({
+      first_name: decoeded.first_name,
+      last_name: decoeded.last_name,
+      email: decoeded.email
+    })
+  }
+
+  logout(e) {
+    e.preventDefault()
+    localStorage.removeItem('usertoken')
+    this.props.history.push(`/login`)
   }
 
   renderPage = page => {
@@ -28,8 +48,7 @@ class Home extends Component {
   };
 
   render() {
-    const { logout, currentUser } = this.props;
-    const { page } = this.state;
+    const { page, email, first_name, last_name } = this.state;
     return (
       <div>
         <nav class="navbar is-white">
@@ -46,8 +65,8 @@ class Home extends Component {
             </div>
             <div id="navMenu" class="navbar-menu">
               <div class="navbar-end">
-                <a class="navbar-item">{currentUser.email}</a>
-                <a class="navbar-item" onClick={logout}>
+                <a class="navbar-item">{email}</a>
+                <a class="navbar-item" onClick={this.logout.bind(this)}>
                   Logout
                 </a>
               </div>

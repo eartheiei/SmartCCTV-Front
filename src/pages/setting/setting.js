@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Record from '../../components/webcamRecorder'
 
 export default class Setting extends Component {
   constructor(props) {
@@ -10,7 +11,10 @@ export default class Setting extends Component {
 
   render() {
     return (
-      <label className="label">Setting</label>
+      <div>
+        <label className="label">Setting</label>
+        <Record/>
+      </div>
       // <div class='column is-4'>
       //   <div class="field">
       //     <label class="label">Name</label>
