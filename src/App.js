@@ -3,6 +3,8 @@ import LoginForm from "./pages/loginForm";
 import Home from "./pages/home";
 import { Route } from "react-router-dom";
 import LiveCam from "./pages/liveCam"
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+
 
 
 const About = () => <h1>About</h1>
@@ -14,11 +16,11 @@ export default class App extends Component {
     return (
       <div className="App container">
         {/* <Route exact path="/" component={LiveCam} /> */}
-        <Route path="/home" component={Home} />
+        <Route path="/homepage" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/post" component={Post} />
         <Route path="/project" component={Project} />
-        <Route path="/" component={LoginForm} />
+        <Route exact path="/" component={LoginForm} />
       </div>
     );
   }

@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Modal } from "react-bulma-components";
+import Record from '../components/webcamRecorder'
 
 export default class MembersInput extends Component {
-  state = {
-    name: "",
-    face: "",
-    user_id: ""
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      open: false,
+      name: "",
+      face: "",
+      user_id: ""
+    };
+  }
 
   handleChangeName = event => {
     this.setState({ name: event.target.value });
@@ -61,23 +68,57 @@ export default class MembersInput extends Component {
               />
             </label>
           </div>
-          {/* <div className="field">
-            <label className="label">
-              Face path:
-              <input
-                className="input"
-                type="text"
-                name="face"
-                onChange={this.handleChangePath}
-              />
-            </label>
-          </div> */}
-          <div className="control">
-            <button type="submit" className="button is-link">
-              add
+          <div style={{ textAlign: "center" }}>
+            <button
+              class="button is-success"
+              onClick={() => this.setState({ open: true })}
+            >
+              Add Photo
             </button>
           </div>
+          <Modal
+            show={this.state.open}
+            onClose={() => this.setState({ open: false })}
+          >
+            <div class="modal is-active">
+              <div class="modal-card" style={{width:'800px'}}>
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Register</p>
+                  <button
+                    class="delete"
+                    aria-label="close"
+                    onClick={() => this.setState({ open: false })}
+                  ></button>
+                </header>
+                <section class="modal-card-body">
+                  <Record/>
+                </section>
+                <footer class="modal-card-foot">
+                  <div class="field is-grouped">
+                    <div class="control">
+                      <button
+                        type="submit"
+                        className="button is-link is-success"
+                        onClick={() => this.setState({ open: false })}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                    <div class="control">
+                      <button
+                        class="button is-link is-danger is-light"
+                        onClick={() => this.setState({ open: false })}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </Modal>
         </form>
+        <div></div>
       </div>
     );
   }
