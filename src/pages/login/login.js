@@ -45,7 +45,7 @@ export default class Login extends Component {
     return (
       <section class="hero has-background-grey is-fullheight">
         <div class="hero-body" style={{ justifyContent: "center" }}>
-          <div class="box" style={{ width: "30vw" }}>
+          <div class="box" style={{ minWidth: "40vw" }}>
             <div className="columns is-centered">
               <label className="title is-1">Smart CCTV</label>
             </div>
@@ -88,9 +88,6 @@ export default class Login extends Component {
                   >
                     <div className="control">
                       <button className="button is-link">Submit</button>
-                    </div>
-                    <div className="control">
-                      <button className="button is-text">Cancel</button>
                     </div>
                   </div>
                 </form>
