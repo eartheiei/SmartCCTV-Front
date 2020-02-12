@@ -1,0 +1,45 @@
+.block.block {
+  background-color: transparent;
+  margin: 0;
+  border-radius: 0;
+  border-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.x10 {
+  width: 64px;
+  height: 36px;
+}
+
+.row {
+  display: flex;
+}
+
+.x5 {
+  display: grid;
+  grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+  
+}
+
+.x10 {
+  display: grid;
+  grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+  grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+  
+}
+
+.x1 {
+  display: grid;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-columns: 25% 25% 25% 25%;
+  
+}
+
+.block-group {
+  position: absolute;
+  left: 4.2rem;
+  width: 640px;
+  height: 360px;
+}

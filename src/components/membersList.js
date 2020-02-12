@@ -9,7 +9,6 @@ export default class MembersList extends Component {
 
   componentDidMount() {
     axios.get(`http://localhost:4000/members`).then(res => {
-      console.log(res);
       this.setState({
         members: res.data.data
       });
@@ -18,30 +17,28 @@ export default class MembersList extends Component {
 
   render() {
     const { members } = this.state;
-    console.log(members)
     return (
       <div>
         <table className="table is-fullwidth">
           <thead>
             <tr>
-              <th>Member ID</th>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Video</th>
+              <th class="has-text-centered">Member ID</th>
+              <th class="has-text-centered">User ID</th>
+              <th class="has-text-centered">Name</th>
+              <th class="has-text-centered">Video</th>
             </tr>
           </thead>
           <tbody>
             {members.map(member =>(
               <tr key={member.Mem_ID}>
-                <td>{member.Mem_ID}</td>
-                <td>{member.User_ID}</td>
-                <td>{member.Name}</td>
-                <td>{member.Face}</td>
+                <td class="has-text-centered">{member.Mem_ID}</td>
+                <td class="has-text-centered">{member.User_ID}</td>
+                <td class="has-text-centered">{member.Name}</td>
+                <td class="has-text-centered">{member.Face}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <Webcam mirrored="true"/> */}
       </div>
     );
   }
