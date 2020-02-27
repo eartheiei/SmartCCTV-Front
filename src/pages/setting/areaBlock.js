@@ -8,7 +8,7 @@ export class BlockScope extends Component {
 
     this.state = {
       blocksId: [],
-      active: []
+      selected: []
     };
   }
 
@@ -18,13 +18,14 @@ export class BlockScope extends Component {
 
   componentWillReceiveProps(nextprops) {
     this.initialGrid(nextprops.grid);
+    if(this.props.grid!=nextprops.grid)this.setState({selected:[]})
   }
 
   initialGrid = grid => {
     var value;
-    if (grid == 1) value = 4;
-    else if (grid == 5) value = 8;
-    else value = 10;
+    if (grid == 1) value = 12;
+    else if (grid == 5) value = 16;
+    else value = 20;
     let tempData = [];
     let temp = [];
     var count = 0;
@@ -36,7 +37,7 @@ export class BlockScope extends Component {
       tempData.push(temp);
       temp = [];
     }
-    this.setState({ blocksId: tempData, active: [] });
+    this.setState({ blocksId: tempData});
   };
 
   classGrid() {
@@ -50,19 +51,9 @@ export class BlockScope extends Component {
     }
   }
 
-  classActive = id => {
-    const { active } = this.state;
-    if (active) {
-      active.map(element => {
-        if (element === id) return "button block is-active";
-        else return "button block";
-      });
-    } else return "button block";
-  };
-
   handleBlock = id => {
-    const { active } = this.state;
-    var tempData = active;
+    const { selected } = this.state;
+    var tempData = selected;
     var status = false;
     tempData.forEach(element => {
       if (element === id) {
@@ -70,22 +61,28 @@ export class BlockScope extends Component {
         status = true;
       }
     });
-    if(!status)tempData.push(id);
-    this.setState({ active: tempData });
-    console.log(active);
+    if (!status) tempData.push(id);
+    this.setState({ selected: tempData });
+    this.props.real(id)
+    console.log(selected);
   };
 
   render() {
-    const { blocksId } = this.state;
+    const { blocksId, selected } = this.state;
     return (
       <div class={this.classGrid()}>
         {blocksId.map(_array => (
           <div>
             {_array.map(element => (
               <button
-                class="button block"//{this.classActive(element)}
+                class={
+                  selected.includes(element)
+                    ? "button block selected"
+                    : "button block"
+                }
                 key={element}
                 onClick={e => this.handleBlock(element, e)}
+                //disabled
               />
             ))}
           </div>

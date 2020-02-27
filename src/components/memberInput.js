@@ -31,9 +31,9 @@ export default class MembersInput extends Component {
     event.preventDefault();
 
     const member = {
-      Name: this.state.name,
-      Face: this.state.face,
-      User_ID: this.state.user_id
+      name: this.state.name,
+      face: this.state.face,
+      user_id: this.state.user_id
     };
 
     axios.post(`http://localhost:4000/members/add`, member).then(res => {
