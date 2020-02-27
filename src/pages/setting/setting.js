@@ -73,7 +73,7 @@ export default class Setting extends Component {
         </table>
         <Modal show={open} onClose={() => this.setState({ open: false })}>
           <div class="modal is-active">
-            <div class="modal-card" style={{ width: "1000px" }}>
+            <div class="modal-card" style={{ width: "1200px" }}>
               <header class="modal-card-head">
                 <p class="modal-card-title">Area Management</p>
                 <button

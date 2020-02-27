@@ -19,3 +19,18 @@ export const getCamera = camera => {
         return res.data
     })
 }
+
+export const addBlock = block => {
+  return axios
+  .post("blocks/add",{
+    area_name: block.area_name,
+    size: block.size,
+    realRow: block.realRow,
+    realColumn: block.realColumn,
+    pixelRow: block.pixelRow,
+    pixelColumn: block.pixelColumn
+  })
+  .then(res =>{
+    console.log("Done!")
+  })
+}

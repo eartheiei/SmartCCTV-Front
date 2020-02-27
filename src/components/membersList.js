@@ -8,9 +8,9 @@ export default class MembersList extends Component {
   };
 
   componentDidMount() {
-    axios.get(`http://localhost:4000/members`).then(res => {
+    axios.get(`http://localhost:4000/members/get`).then(res => {
       this.setState({
-        members: res.data.data
+        members: res.data
       });
     });
   }
@@ -31,10 +31,10 @@ export default class MembersList extends Component {
           <tbody>
             {members.map(member =>(
               <tr key={member.Mem_ID}>
-                <td class="has-text-centered">{member.Mem_ID}</td>
-                <td class="has-text-centered">{member.User_ID}</td>
-                <td class="has-text-centered">{member.Name}</td>
-                <td class="has-text-centered">{member.Face}</td>
+                <td class="has-text-centered">{member.mem_id}</td>
+                <td class="has-text-centered">{member.user_id}</td>
+                <td class="has-text-centered">{member.name}</td>
+                <td class="has-text-centered">{member.face}</td>
               </tr>
             ))}
           </tbody>
