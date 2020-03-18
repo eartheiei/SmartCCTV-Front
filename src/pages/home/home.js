@@ -1,11 +1,19 @@
 import React, { Component } from "react";
-import { Route, NavLink, Link, BrowserRouter } from "react-router-dom";
+import {
+  Route,
+  NavLink,
+  Link,
+  BrowserRouter,
+  Switch,
+  Router
+} from "react-router-dom";
 import Search from "../search";
 import LiveCam from "../liveCam";
 import Register from "../register";
 import Setting from "../setting";
 import jwt_decode from "jwt-decode";
-import { register } from "../../components/UserFunctions";
+
+import "./home.css";
 
 class Home extends Component {
   constructor(props) {
@@ -37,77 +45,86 @@ class Home extends Component {
   render() {
     const { page, email, first_name, last_name } = this.state;
     return (
-      <BrowserRouter>
-        <div>
-          <nav class="navbar is-white">
-            <div class="container">
-              <div class="navbar-brand">
-                <a class="navbar-item brand-text" >
-                  SmartCCTV
-                </a>
-                <div class="navbar-burger burger" data-target="navMenu">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-              <div id="navMenu" class="navbar-menu">
-                <div class="navbar-end">
-                  <a class="navbar-item">{email}</a>
-                  <a class="navbar-item" onClick={this.logout.bind(this)}>
-                    Logout
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
-          <div class="container">
+        <div class="container is-fluid" style={{ margin: "0em" }}>
+          <div class="container is-fluid" style={{ margin: "0em" }}>
             <div class="columns">
-              <div class="column is-one-quarter">
+              <div class="column is-one-fifth sidebar">
+                <div class="column">
+                  <div class="navbar-brand">
+                    <a
+                      class="navbar-item brand-text title white"
+                      style={{ paddingLeft: "0em" }}
+                    >
+                      SmartCCTV
+                    </a>
+                    <div class="navbar-burger burger" data-target="navMenu">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
                 <div class="column">
                   <aside class="menu is-hidden-mobile">
-                    <p class="menu-label">General</p>
+                    <p class="menu-label grey">General</p>
                     <ul class="menu-list">
                       <li>
                         <NavLink to="/livecam">
-                          Live Camera
+                          <a class="white">Live Camera</a>
                         </NavLink>
                       </li>
                     </ul>
-                    <p class="menu-label">Administration</p>
+                    <p class="menu-label grey">Administration</p>
                     <ul class="menu-list">
                       <li>
                         <NavLink to="/search">
-                          Search Member
+                          <a class="white">Search Member</a>
                         </NavLink>
                       </li>
                       <li>
                         <NavLink to="/members/register">
-                          Members Management
+                          <a class="white">Members Management</a>
                         </NavLink>
                       </li>
                     </ul>
-                    <p class="menu-label">Setting</p>
+                    <p class="menu-label grey">Setting</p>
                     <ul class="menu-list">
                       <li>
                         <NavLink to="/setting">
-                          Setting
+                          <a class="white">Setting</a>
                         </NavLink>
                       </li>
                     </ul>
                   </aside>
                 </div>
               </div>
-              <div class="column">
-                <Route path="/livecam" component={LiveCam} />
-                <Route path="/search" component={Search} />
-                <Route path="/members/register" component={Register} />
-                <Route path="/setting" component={Setting} />
+              <div class="column" style={{ padding: "0px" }}>
+                <div class="column headbar">
+                  <div
+                    id="navMenu"
+                    class="navbar-menu"
+                    style={{ height: "5.3rem" }}
+                  >
+                    <div class="navbar-end">
+                      <a
+                        class="navbar-item"
+                        style={{ marginBottom: "0em", marginRight: "1rem" }}
+                      >
+                        <label>{email}</label>
+                      </a>
+                      <a class="navbar-item" onClick={this.logout.bind(this)}>
+                        <label>Logout</label>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="column" style={{ padding: "3rem" }}>
+                  {this.props.component}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </BrowserRouter>
     );
   }
 }
