@@ -38,9 +38,9 @@ export default class SearchControl extends Component {
   onChangePicture(e) {
     if (e.target.files[0]) {
       if (
-        e.target.files[0].type == "image/jpg" ||
-        e.target.files[0].type == "image/png" ||
-        e.target.files[0].type == "image/jpeg"
+        e.target.files[0].type === "image/jpg" ||
+        e.target.files[0].type === "image/png" ||
+        e.target.files[0].type === "image/jpeg"
       ) {
         this.setState({
           picture: e.target.files[0],
@@ -70,7 +70,7 @@ export default class SearchControl extends Component {
       name: this.state.name,
       picture: this.state.picture,
       areaName: this.state.areaName,
-      camera: this.state.camera,
+      camera: this.state.camera
       // date: this.state.date,
       // timeStart: this.state.timeStart,
       // timeEnd: this.state.timeEnd
@@ -280,48 +280,49 @@ export default class SearchControl extends Component {
             </div>
           </form>
         </div>
-        <Modal show={open} onClose={() => this.setState({ open: false })}>
-          <div class="modal is-active">
-            <div class="modal-card" style={{ width: "1000px" }}>
-              <header class="modal-card-head">
-                <p class="modal-card-title">Verify member</p>
-                <button
-                  class="delete"
-                  aria-label="close"
-                  onClick={() => this.setState({ open: false })}
-                ></button>
-              </header>
-              <section class="modal-card-body">
-                <label class="label">
-                  Please verify the face with database.
-                </label>
-                <VerifyFace picture={picture} />
-              </section>
-              <footer
-                class="modal-card-foot"
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button
-                      type="submit"
-                      className="button is-link is-success"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                  <div class="control">
-                    <button
-                      class="button is-link is-danger is-light"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+        <Modal
+          show={open}
+          onClose={() => this.setState({ open: false })}
+          showClose={false}
+          closeOnBlur={true}
+        >
+          <div class="modal-card" style={{ width: "1000px" }}>
+            <header class="modal-card-head">
+              <p class="modal-card-title">Verify member</p>
+              <button
+                class="delete"
+                aria-label="close"
+                onClick={() => this.setState({ open: false })}
+              ></button>
+            </header>
+            <section class="modal-card-body">
+              <label class="label">Please verify the face with database.</label>
+              <VerifyFace picture={picture} />
+            </section>
+            <footer
+              class="modal-card-foot"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div class="field is-grouped">
+                <div class="control">
+                  <button
+                    type="submit"
+                    className="button is-link is-success"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Submit
+                  </button>
                 </div>
-              </footer>
-            </div>
+                <div class="control">
+                  <button
+                    class="button is-link is-danger is-light"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </footer>
           </div>
         </Modal>
         <Pagination result={result} />

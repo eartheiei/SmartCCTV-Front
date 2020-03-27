@@ -23,3 +23,4 @@ export const uploadPicture = picture => {
     console.log(res.statusText)
   })
 }
+

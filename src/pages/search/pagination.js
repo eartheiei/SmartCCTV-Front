@@ -38,7 +38,7 @@ export default class Pagination extends Component {
     } else {
       index = currentPage * 10;
     }
-    var start = index >= 10 ? index - 10 : 0 + ((currentPage-1)*10);
+    var start = index >= 10 ? index - 10 : 0 + (currentPage - 1) * 10;
     const end = index >= 10 ? 10 : index;
 
     for (var i = 0; i < end; i++) {
@@ -54,9 +54,7 @@ export default class Pagination extends Component {
 
   onClickPage = state => {
     const { allPage } = this.state;
-    var temp = state
-      ? this.state.currentPage + 1
-      : this.state.currentPage - 1;
+    var temp = state ? this.state.currentPage + 1 : this.state.currentPage - 1;
     if (temp > allPage[allPage.length - 1]) temp = allPage[allPage.length - 1];
     if (temp < allPage[0]) temp = allPage[0];
     this.setState({
@@ -91,7 +89,7 @@ export default class Pagination extends Component {
             ))}
           </tbody>
         </table>
-        {result.length >= 1 ? (
+        {result.length >= 1 && (
           <nav
             class="pagination is-centered"
             role="navigation"
@@ -114,8 +112,6 @@ export default class Pagination extends Component {
               </li>
             </ul>
           </nav>
-        ) : (
-          <div></div>
         )}
       </div>
     );

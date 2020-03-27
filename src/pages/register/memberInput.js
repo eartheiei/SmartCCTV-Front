@@ -12,8 +12,9 @@ export default class MembersInput extends Component {
     this.state = {
       open: false,
       name: "",
-      face: "",
-      user_id: ""
+      face: [],
+      user_id: "",
+      message: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -33,22 +34,27 @@ export default class MembersInput extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    this.setState({ open: false });
+    if (this.state.face.length == 5) {
+      this.setState({ open: false, message: "" });
 
-    const member = {
-      name: this.state.name,
-      picture: this.state.face,
-      user_id: this.state.user_id
-    };
+      const member = {
+        name: this.state.name,
+        picture: this.state.face,
+        user_id: this.state.user_id
+      };
 
-    axios.post(`http://localhost:4000/members/add`, member).then(res => {
-      console.log(res);
-      // console.log(res.data);
-    });
+      axios.post(`http://localhost:4000/members/add`, member).then(res => {
+        this.props.history.push(`/members/register`);
+      });
+    } else {
+      this.setState({
+        message: "Please take all the photos."
+      });
+    }
   }
 
   render() {
-    const { name, user_id, face } = this.state;
+    const { name, user_id, face, message } = this.state;
     return (
       <div>
         <div style={{ textAlign: "center" }}>
@@ -62,8 +68,10 @@ export default class MembersInput extends Component {
         <Modal
           show={this.state.open}
           onClose={() => this.setState({ open: false })}
+          showClose={false}
+          closeOnBlur={true}
         >
-          <div class="modal is-active">
+          <form onSubmit={this.onSubmit}>
             <div class="modal-card" style={{ width: "1000px" }}>
               <header class="modal-card-head">
                 <p class="modal-card-title">Register</p>
@@ -82,6 +90,7 @@ export default class MembersInput extends Component {
                       type="text"
                       name="user_id"
                       onChange={this.onChange}
+                      required
                     />
                   </label>
                 </div>
@@ -93,6 +102,7 @@ export default class MembersInput extends Component {
                       type="text"
                       name="name"
                       onChange={this.onChange}
+                      required
                     />
                   </label>
                 </div>
@@ -104,7 +114,7 @@ export default class MembersInput extends Component {
                     <button
                       type="submit"
                       className="button is-link is-success"
-                      onClick={this.onSubmit}
+                      // onClick={this.onSubmit}
                     >
                       Submit
                     </button>
@@ -117,10 +127,21 @@ export default class MembersInput extends Component {
                       Cancel
                     </button>
                   </div>
+                  {message != "" && (
+                    <label
+                      style={{
+                        color: "red",
+                        paddingTop: "0.85rem",
+                        paddingRight: "2rem"
+                      }}
+                    >
+                      {message}
+                    </label>
+                  )}
                 </div>
               </footer>
             </div>
-          </div>
+          </form>
         </Modal>
       </div>
     );

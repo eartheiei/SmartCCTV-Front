@@ -45,15 +45,24 @@ class Home extends Component {
   render() {
     const { page, email, first_name, last_name } = this.state;
     return (
+      <div class="container is-fluid" style={{ margin: "0em" }}>
         <div class="container is-fluid" style={{ margin: "0em" }}>
-          <div class="container is-fluid" style={{ margin: "0em" }}>
-            <div class="columns">
-              <div class="column is-one-fifth sidebar">
+          <div class="columns">
+            <div class="column is-one-fifth sidebar" style={{padding:'0px'}}>
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "black",
+                  opacity: "0.5",
+                  paddingLeft:'2rem'
+                }}
+              >
                 <div class="column">
                   <div class="navbar-brand">
                     <a
                       class="navbar-item brand-text title white"
-                      style={{ paddingLeft: "0em" }}
+                      style={{ paddingTop: "1rem" }}
                     >
                       SmartCCTV
                     </a>
@@ -98,33 +107,34 @@ class Home extends Component {
                   </aside>
                 </div>
               </div>
-              <div class="column" style={{ padding: "0px" }}>
-                <div class="column headbar">
-                  <div
-                    id="navMenu"
-                    class="navbar-menu"
-                    style={{ height: "5.3rem" }}
-                  >
-                    <div class="navbar-end">
-                      <a
-                        class="navbar-item"
-                        style={{ marginBottom: "0em", marginRight: "1rem" }}
-                      >
-                        <label>{email}</label>
-                      </a>
-                      <a class="navbar-item" onClick={this.logout.bind(this)}>
-                        <label>Logout</label>
-                      </a>
-                    </div>
+            </div>
+            <div class="column" style={{ padding: "0px" }}>
+              <div class="column headbar">
+                <div
+                  id="navMenu"
+                  class="navbar-menu"
+                  style={{ height: "5.3rem" }}
+                >
+                  <div class="navbar-end">
+                    <a
+                      class="navbar-item"
+                      style={{ marginBottom: "0em", marginRight: "1rem" }}
+                    >
+                      <label>{email}</label>
+                    </a>
+                    <a class="navbar-item" onClick={this.logout.bind(this)}>
+                      <label>Logout</label>
+                    </a>
                   </div>
                 </div>
-                <div class="column" style={{ padding: "3rem" }}>
-                  {this.props.component}
-                </div>
+              </div>
+              <div class="column" style={{ padding: "3rem" }}>
+                {this.props.component}
               </div>
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }

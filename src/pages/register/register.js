@@ -7,12 +7,12 @@ export default class Register extends Component {
     return (
       <div>
         <label className="label title is-3">Member Management</label>
-        <div className="columns is-centered">
+        <MemberList />
+        <div className="columns is-centered" style={{marginTop:'2rem'}}>
           <div className="column is-half">
             <MembersInput />
           </div>
         </div>
-        <MemberList />
       </div>
     );
   }

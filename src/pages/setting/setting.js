@@ -47,7 +47,9 @@ export default class Setting extends Component {
               <th class="has-text-centered">Camera Id</th>
               <th class="has-text-centered">IP Camera</th>
               <th class="has-text-centered">Location</th>
-              <th class="has-text-centered" style={{ width: "15%" }}>Area</th>
+              <th class="has-text-centered" style={{ width: "15%" }}>
+                Area
+              </th>
               <th class="has-text-centered" style={{ width: "15%" }}>
                 Delete
               </th>
@@ -60,13 +62,16 @@ export default class Setting extends Component {
                 <td class="has-text-centered">{camera.ip}</td>
                 <td class="has-text-centered">{camera.location}</td>
                 <td class="has-text-centered">
-                  <p class="modal-icon filename" onClick={e => this.handleArea(camera.cam_id, camera.ip)}>
+                  <p
+                    class="modal-icon filename"
+                    onClick={e => this.handleArea(camera.cam_id, camera.ip)}
+                  >
                     <span class="icon-holder">
                       <img
                         src="https://image.flaticon.com/icons/svg/1705/1705697.svg"
                         alt="Area"
                         class="replaced-svg"
-                        style={{ width: "8%", marginRight:'3px'}}
+                        style={{ width: "8%", marginRight: "3px" }}
                       />
                     </span>
                     <span>
@@ -90,45 +95,48 @@ export default class Setting extends Component {
             ))}
           </tbody>
         </table>
-        <Modal show={open} onClose={() => this.setState({ open: false })}>
-          <div class="modal is-active">
-            <div class="modal-card" style={{ width: "1300px" }}>
-              <header class="modal-card-head">
-                <p class="modal-card-title">Area Management</p>
-                <button
-                  class="delete"
-                  aria-label="close"
-                  onClick={() => this.setState({ open: false })}
-                ></button>
-              </header>
-              <section class="modal-card-body">
-                <AreaManage id={id} ip={ip} />
-              </section>
-              <footer
-                class="modal-card-foot"
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button
-                      type="submit"
-                      className="button is-link is-success"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                  <div class="control">
-                    <button
-                      class="button is-link is-danger is-light"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+        <Modal
+          show={open}
+          onClose={() => this.setState({ open: false })}
+          showClose={false}
+          closeOnBlur={true}
+        >
+          <div class="modal-card" style={{ width: "1300px" }}>
+            <header class="modal-card-head">
+              <p class="modal-card-title">Area Management</p>
+              <button
+                class="delete"
+                aria-label="close"
+                onClick={() => this.setState({ open: false })}
+              ></button>
+            </header>
+            <section class="modal-card-body">
+              <AreaManage id={id} ip={ip} />
+            </section>
+            <footer
+              class="modal-card-foot"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div class="field is-grouped">
+                <div class="control">
+                  <button
+                    type="submit"
+                    className="button is-link is-success"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Submit
+                  </button>
                 </div>
-              </footer>
-            </div>
+                <div class="control">
+                  <button
+                    class="button is-link is-danger is-light"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </footer>
           </div>
         </Modal>
         <div
