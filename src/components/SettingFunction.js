@@ -28,7 +28,8 @@ export const addBlock = block => {
     realRow: block.realRow,
     realColumn: block.realColumn,
     pixelRow: block.pixelRow,
-    pixelColumn: block.pixelColumn
+    pixelColumn: block.pixelColumn,
+    cam_id: block.cam_id
   })
   .then(res =>{
     console.log("Done!")

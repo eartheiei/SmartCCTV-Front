@@ -11,7 +11,8 @@ export default class Setting extends Component {
     this.state = {
       cameras: [],
       open: false,
-      id: 0
+      id: 0,
+      ip: ""
     };
   }
 
@@ -26,12 +27,12 @@ export default class Setting extends Component {
     });
   }
 
-  handleArea = id => {
-    this.setState({ open: true, id: id });
+  handleArea = (id, ip) => {
+    this.setState({ open: true, id: id, ip: ip });
   };
 
   render() {
-    const { cameras, open, id } = this.state;
+    const { cameras, open, id, ip } = this.state;
     return (
       <div>
         <label className="label title is-3">Settings</label>
@@ -46,9 +47,12 @@ export default class Setting extends Component {
               <th class="has-text-centered">Camera Id</th>
               <th class="has-text-centered">IP Camera</th>
               <th class="has-text-centered">Location</th>
-              <th class="has-text-centered">Area</th>
-              <th class="has-text-centered">Edit</th>
-              <th class="has-text-centered">Delete</th>
+              <th class="has-text-centered" style={{ width: "15%" }}>
+                Area
+              </th>
+              <th class="has-text-centered" style={{ width: "15%" }}>
+                Delete
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -58,55 +62,81 @@ export default class Setting extends Component {
                 <td class="has-text-centered">{camera.ip}</td>
                 <td class="has-text-centered">{camera.location}</td>
                 <td class="has-text-centered">
-                  <a
-                    class="textOnClick"
-                    onClick={e => this.handleArea(camera.cam_id, e)}
+                  <p
+                    class="modal-icon filename"
+                    onClick={e => this.handleArea(camera.cam_id, camera.ip)}
                   >
-                    Area
-                  </a>
+                    <span class="icon-holder">
+                      <img
+                        src="https://image.flaticon.com/icons/svg/1705/1705697.svg"
+                        alt="Area"
+                        class="replaced-svg"
+                        style={{ width: "8%", marginRight: "3px" }}
+                      />
+                    </span>
+                    <span>
+                      <span class="description">Manage</span>
+                    </span>
+                  </p>
                 </td>
-                <td class="textOnClick has-text-centered">Edit</td>
-                <td class="textOnClick has-text-centered">Delete</td>
+                <td class="has-text-centered">
+                  <p class="modal-icon filename">
+                    <span class="icon-holder">
+                      <img
+                        src="https://image.flaticon.com/icons/svg/565/565492.svg"
+                        alt="Delete"
+                        class="replaced-svg"
+                        style={{ width: "8%" }}
+                      />
+                    </span>
+                  </p>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Modal show={open} onClose={() => this.setState({ open: false })}>
-          <div class="modal is-active">
-            <div class="modal-card" style={{ width: "1200px" }}>
-              <header class="modal-card-head">
-                <p class="modal-card-title">Area Management</p>
-                <button
-                  class="delete"
-                  aria-label="close"
-                  onClick={() => this.setState({ open: false })}
-                ></button>
-              </header>
-              <section class="modal-card-body">
-                <AreaManage id={id}/>
-              </section>
-              <footer class="modal-card-foot" style={{display:"flex", justifyContent:"center"}}>
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button
-                      type="submit"
-                      className="button is-link is-success"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                  <div class="control">
-                    <button
-                      class="button is-link is-danger is-light"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+        <Modal
+          show={open}
+          onClose={() => this.setState({ open: false })}
+          showClose={false}
+          closeOnBlur={true}
+        >
+          <div class="modal-card" style={{ width: "1300px" }}>
+            <header class="modal-card-head">
+              <p class="modal-card-title">Area Management</p>
+              <button
+                class="delete"
+                aria-label="close"
+                onClick={() => this.setState({ open: false })}
+              ></button>
+            </header>
+            <section class="modal-card-body">
+              <AreaManage id={id} ip={ip} />
+            </section>
+            <footer
+              class="modal-card-foot"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div class="field is-grouped">
+                <div class="control">
+                  <button
+                    type="submit"
+                    className="button is-link is-success"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Submit
+                  </button>
                 </div>
-              </footer>
-            </div>
+                <div class="control">
+                  <button
+                    class="button is-link is-danger is-light"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </footer>
           </div>
         </Modal>
         <div

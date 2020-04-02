@@ -1,29 +1,49 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
-import example1 from "../asset/FrontTurned.png";
+
+import "./register.css";
 
 export default class Record extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       screenshot: null,
-      tab: 1
+      tab: 0,
+      picture: [],
+      base64Img: []
     };
   }
 
   handleClick = () => {
+    const { picture, tab, base64Img } = this.state;
+    var temp = picture;
+    var base64 = base64Img;
     const screenshot = this.webcam.getScreenshot();
-    const num = this.state.tab+1;
+    const num = (tab + 1) % 5;
 
-    this.setState({ screenshot });
-    this.setState({
-      tab: num
-    })
-
-    console.log(this.state.tab)
+    if (tab < 5) {
+      temp[tab] = screenshot;
+      base64[tab] = screenshot.split(',')[1];
+      console.log(screenshot.split(',')[1])
+      this.setState({
+        tab: num,
+        picture: temp,
+        base64Img: base64
+      });
+      this.props.setPicture(base64)
+      console.log(temp)
+    }
   };
 
   render() {
+    const { tab, screenshot, picture } = this.state;
+    const path = [
+      "FrontTurned.png",
+      "HalfLeftTurned.png",
+      "HalfRightTurned.png",
+      "LeftTurned.png",
+      "RightTurned.png"
+    ];
     return (
       <div>
         <h1 class="title">Take Photo</h1>
@@ -36,7 +56,7 @@ export default class Record extends React.Component {
           }}
         >
           <img
-            src={require("../asset/FrontTurned.png")}
+            src={require("../../asset/" + path[tab])}
             height="360"
             width="360"
           />
@@ -62,9 +82,14 @@ export default class Record extends React.Component {
                 Capture
               </button>
             </div>
-            {this.state.screenshot ? (
-              <img src={this.state.screenshot} height="240" width="240" />
-            ) : null}
+            {picture.map((ele, index) => (
+              <img
+                onClick={() => this.setState({ tab: index })}
+                style={{ borderRadius: "6px", marginRight: "0.5rem", cursor: "pointer"}}
+                src={ele}
+                width="180"
+              />
+            ))}
           </div>
         </div>
       </div>

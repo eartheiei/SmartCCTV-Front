@@ -23,3 +23,8 @@
 .button {
     margin-left: 1rem;
 }
+
+span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

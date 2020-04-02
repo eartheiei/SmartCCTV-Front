@@ -15,3 +15,12 @@ export const searchVideo = search => {
         return res.data
     });
 };
+
+export const uploadPicture = picture => {
+  return axios
+  .post("search/upload",picture)
+  .then( res => {
+    console.log(res.statusText)
+  })
+}
+
