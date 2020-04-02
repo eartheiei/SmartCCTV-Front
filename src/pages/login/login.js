@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { login } from "../../components/UserFunctions";
 
+import "./login.css";
+
 export default class Login extends Component {
   constructor() {
     super();
@@ -12,38 +14,37 @@ export default class Login extends Component {
       errors: {}
     };
 
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(e){
-      e.preventDefault()
+  onSubmit(e) {
+    e.preventDefault();
 
-      const user = {
-        email: this.state.email,
-        password: this.state.password
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    login(user).then(res => {
+      if (res) {
+        this.props.history.push(`/homepage`);
+      } else {
+        this.setState({
+          message: "Login failed! Plaese check your email."
+        });
       }
-  
-      login(user).then(res=> {
-        if (res) {
-          this.props.history.push(`/homepage`)
-        }
-        else {
-            this.setState({
-                message : 'Login failed! Plaese check your email.'
-            })
-        }
-      })
+    });
   }
 
   render() {
-    const { email, password, message} = this.state
+    const { email, password, message } = this.state;
     return (
-      <section class="hero has-background-grey is-fullheight">
+      <section class="hero is-fullheight background">
         <div class="hero-body" style={{ justifyContent: "center" }}>
           <div class="box" style={{ minWidth: "40vw" }}>
             <div className="columns is-centered">
@@ -62,6 +63,7 @@ export default class Login extends Component {
                         placeholder="Enter email"
                         value={email}
                         onChange={this.onChange}
+                        required
                       />
                     </div>
                   </div>
@@ -76,12 +78,18 @@ export default class Login extends Component {
                         placeholder="Password"
                         value={password}
                         onChange={this.onChange}
+                        required
                       />
                     </div>
                   </div>
                   {message ? (
-                      <p className="help is-danger" style={{marginBottom:'10px'}}>{message}</p>
-                    ) : null}
+                    <p
+                      className="help is-danger"
+                      style={{ marginBottom: "10px" }}
+                    >
+                      {message}
+                    </p>
+                  ) : null}
                   <div
                     className="field is-grouped"
                     style={{ display: "flex", justifyContent: "center" }}

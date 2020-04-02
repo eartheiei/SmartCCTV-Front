@@ -23,9 +23,9 @@ export class BlockScope extends Component {
 
   initialGrid = grid => {
     var value;
-    if (grid == 1) value = 12;
-    else if (grid == 5) value = 16;
-    else value = 20;
+    if (grid == 1) value = 16;
+    else if (grid == 5) value = 20;
+    else value = 24;
     let tempData = [];
     let temp = [];
     var count = 0;

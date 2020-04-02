@@ -14,7 +14,8 @@ export default class AreaManage extends Component {
       blockNumber: 0,
       areaName: "",
       realRow: "",
-      realColumn: ""
+      realColumn: "",
+      cam_id: 0
     };
 
     this.onChange = this.onChange.bind(this);
@@ -31,26 +32,26 @@ export default class AreaManage extends Component {
     var col=0,row=0,pixelRow=0,pixelCol=0
 
     if (this.state.status == 1) {
-      col = Math.floor(blockNumber / 12);
-      row = Math.floor(blockNumber % 12);
-    } else if (this.state.status == 5) {
       col = Math.floor(blockNumber / 16);
       row = Math.floor(blockNumber % 16);
-    } else {
+    } else if (this.state.status == 5) {
       col = Math.floor(blockNumber / 20);
       row = Math.floor(blockNumber % 20);
+    } else {
+      col = Math.floor(blockNumber / 24);
+      row = Math.floor(blockNumber % 24);
     }
     console.log(row,col)
 
     if (this.state.status == 1) {
       pixelCol = 80 * col + 40;
-      pixelRow = 40 * row + 20;
+      pixelRow = 45 * row + 22.5;
     } else if (this.state.status == 5) {
-      pixelCol = 60 * col + 30;
-      pixelRow = 30 * row + 15;
+      pixelCol = 64 * col + 32;
+      pixelRow = 36 * row + 18;
     } else {
-      pixelCol = 48 * col + 24;
-      pixelRow = 24 * row + 12;
+      pixelCol = 53.33 * col + 26.665;
+      pixelRow = 30 * row + 15;
     }
 
     const block = {
@@ -59,7 +60,8 @@ export default class AreaManage extends Component {
       realRow: parseInt(this.state.realRow),
       realColumn: parseInt(this.state.realColumn),
       pixelRow: pixelRow,
-      pixelColumn: pixelCol
+      pixelColumn: pixelCol,
+      cam_id: parseInt(this.props.id)
     };
 
     console.log(block)
@@ -74,7 +76,7 @@ export default class AreaManage extends Component {
   };
 
   render() {
-    const { id } = this.props;
+    const { id, ip } = this.props;
     const { status, blockNumber, areaName, realRow, realColumn } = this.state;
     return (
       <div>
@@ -86,8 +88,8 @@ export default class AreaManage extends Component {
           <div class="center">
             <BlockScope grid={status} real={this.assignRealBlock} />
             <img
-              src={require("../../asset/testing.jpg")}
-              style={{ width: "960px", height: "480px" }}
+              src={require(`../../asset/${ip.slice(10)}.png`)}
+              style={{ width: "1024px", height: "576px" }}
             />
             <div class="input-value">
               <div class="field">
