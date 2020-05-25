@@ -1,16 +1,5 @@
 import React, { Component } from "react";
-import {
-  Route,
-  NavLink,
-  Link,
-  BrowserRouter,
-  Switch,
-  Router
-} from "react-router-dom";
-import Search from "../search";
-import LiveCam from "../liveCam";
-import Register from "../register";
-import Setting from "../setting";
+import { NavLink, push } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import "./home.css";
@@ -22,7 +11,8 @@ class Home extends Component {
       page: "liveCam",
       first_name: "",
       last_name: "",
-      email: ""
+      email: "",
+      role: "",
     };
   }
 
@@ -32,30 +22,31 @@ class Home extends Component {
     this.setState({
       first_name: decoeded.first_name,
       last_name: decoeded.last_name,
-      email: decoeded.email
+      email: decoeded.email,
+      role: decoeded.role,
     });
   }
 
   logout(e) {
     e.preventDefault();
     localStorage.removeItem("usertoken");
-    this.props.history.push(`/login`);
+    this.props.history.push("/login");
   }
 
   render() {
-    const { page, email, first_name, last_name } = this.state;
+    const { page, email, first_name, last_name, role } = this.state;
     return (
       <div class="container is-fluid" style={{ margin: "0em" }}>
         <div class="container is-fluid" style={{ margin: "0em" }}>
           <div class="columns">
-            <div class="column is-one-fifth sidebar" style={{padding:'0px'}}>
+            <div class="column is-one-fifth sidebar" style={{ padding: "0px" }}>
               <div
                 style={{
                   width: "100%",
                   height: "100%",
                   backgroundColor: "black",
                   opacity: "0.5",
-                  paddingLeft:'2rem'
+                  paddingLeft: "2rem",
                 }}
               >
                 <div class="column">
@@ -90,20 +81,37 @@ class Home extends Component {
                           <a class="white">Search Member</a>
                         </NavLink>
                       </li>
-                      <li>
-                        <NavLink to="/members/register">
-                          <a class="white">Members Management</a>
-                        </NavLink>
-                      </li>
+                      {role === "admin" ? (
+                        <li>
+                          <NavLink to="/members/register">
+                            <a class="white">Members Management</a>
+                          </NavLink>
+                        </li>
+                      ) : (
+                        <div />
+                      )}
+                      {role === "super admin" && (
+                        <li>
+                          <NavLink to="/admin">
+                            <a class="white">Admins Management</a>
+                          </NavLink>
+                        </li>
+                      )}
                     </ul>
-                    <p class="menu-label grey">Setting</p>
-                    <ul class="menu-list">
-                      <li>
-                        <NavLink to="/setting">
-                          <a class="white">Setting</a>
-                        </NavLink>
-                      </li>
-                    </ul>
+                    {role === "admin" ? (
+                      <div>
+                        <p class="menu-label grey">Setting</p>
+                        <ul class="menu-list">
+                          <li>
+                            <NavLink to="/setting">
+                              <a class="white">Setting</a>
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    ) : (
+                      <div />
+                    )}
                   </aside>
                 </div>
               </div>
@@ -116,13 +124,17 @@ class Home extends Component {
                   style={{ height: "5.3rem" }}
                 >
                   <div class="navbar-end">
-                    <a
-                      class="navbar-item"
+                    <NavLink
+                      class="navbar-item user"
                       style={{ marginBottom: "0em", marginRight: "1rem" }}
+                      to="/profile"
                     >
                       <label>{email}</label>
-                    </a>
-                    <a class="navbar-item" onClick={this.logout.bind(this)}>
+                    </NavLink>
+                    <a
+                      class="navbar-item user"
+                      onClick={this.logout.bind(this)}
+                    >
                       <label>Logout</label>
                     </a>
                   </div>

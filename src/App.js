@@ -8,6 +8,8 @@ import Search from "./pages/search";
 import LiveCam from "./pages/liveCam";
 import Register from "./pages/register";
 import Setting from "./pages/setting";
+import AdminRegister from "./pages/superAdmin"
+import Profile from "./pages/profile"
 
 export default class App extends Component {
   render() {
@@ -30,6 +32,12 @@ export default class App extends Component {
           </Route>
           <Route path="/setting">
             <Home component={<Setting />} />
+          </Route>
+          <Route path="/admin">
+            <Home component={<AdminRegister />} />
+          </Route>
+          <Route path="/profile">
+            <Home component={<Profile />} />
           </Route>
         </div>
       </Router>

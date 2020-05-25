@@ -1,0 +1,49 @@
+.hidden {
+  position: absolute;
+  opacity: 0.00001;
+}
+
+.playlist-box {
+  width: 240px;
+  height: 480px;
+  background-color: #202020;
+  overflow: hidden;
+}
+
+.playlist-name {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  padding: 1rem;
+  color: white;
+  cursor: pointer;
+}
+
+.playlist-name:hover {
+  background-color: dimgray;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.ranking-box {
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.select-userId div:hover {
+  cursor: pointer;
+  border: solid 3px #70db70;
+}
+
+.selected-id {
+  border: solid 3px #70db70;
+}

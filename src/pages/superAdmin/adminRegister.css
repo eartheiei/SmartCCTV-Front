@@ -1,0 +1,13 @@
+.input-admin {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  
+  .button-input {
+    margin-left: 1.5rem;
+
+  }
+  
+  .input-text {
+    margin-top: 0.4rem;
+  }

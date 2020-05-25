@@ -1,0 +1,13 @@
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.input-group{
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.font {
+    font-size: 1.5rem;
+}

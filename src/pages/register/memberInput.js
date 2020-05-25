@@ -14,7 +14,7 @@ export default class MembersInput extends Component {
       name: "",
       face: [],
       user_id: "",
-      message: ""
+      message: "",
     };
 
     this.onChange = this.onChange.bind(this);
@@ -25,30 +25,29 @@ export default class MembersInput extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  setPicture = picture => {
+  setPicture = (picture) => {
     this.setState({
-      face: picture
+      face: picture,
     });
   };
 
   onSubmit(e) {
     e.preventDefault();
-
     if (this.state.face.length == 5) {
       this.setState({ open: false, message: "" });
 
       const member = {
         name: this.state.name,
         picture: this.state.face,
-        user_id: this.state.user_id
+        user_id: this.state.user_id,
       };
 
-      axios.post(`http://localhost:4000/members/add`, member).then(res => {
-        this.props.history.push(`/members/register`);
+      axios.post(`http://localhost:4000/members/add`, member).then((res) => {
+        window.location.reload();
       });
     } else {
       this.setState({
-        message: "Please take all the photos."
+        message: "Please take all the photos.",
       });
     }
   }
@@ -69,79 +68,74 @@ export default class MembersInput extends Component {
           show={this.state.open}
           onClose={() => this.setState({ open: false })}
           showClose={false}
-          closeOnBlur={true}
         >
-          <form onSubmit={this.onSubmit}>
-            <div class="modal-card" style={{ width: "1000px" }}>
-              <header class="modal-card-head">
-                <p class="modal-card-title">Register</p>
-                <button
-                  class="delete"
-                  aria-label="close"
-                  onClick={() => this.setState({ open: false })}
-                ></button>
-              </header>
-              <section class="modal-card-body">
-                <div className="field text-input">
-                  <label className="label" style={{ width: "35%" }}>
-                    Member ID:
-                    <input
-                      className="input"
-                      type="text"
-                      name="user_id"
-                      onChange={this.onChange}
-                      required
-                    />
+          <div class="modal-card" style={{ width: "1000px" }}>
+            <header class="modal-card-head">
+              <p class="modal-card-title">Register</p>
+              <button
+                class="delete"
+                aria-label="close"
+                onClick={() => this.setState({ open: false })}
+              ></button>
+            </header>
+            <section class="modal-card-body">
+              <div className="field text-input">
+                <label className="label" style={{ width: "35%" }}>
+                  Member ID:
+                  <input
+                    className="input"
+                    type="text"
+                    name="user_id"
+                    onChange={this.onChange}
+                  />
+                </label>
+              </div>
+              <div className="field text-input">
+                <label className="label" style={{ width: "35%" }}>
+                  Member Name:
+                  <input
+                    className="input"
+                    type="text"
+                    name="name"
+                    onChange={this.onChange}
+                  />
+                </label>
+              </div>
+              <Record setPicture={this.setPicture} />
+            </section>
+            <footer class="modal-card-foot">
+              <div class="field is-grouped">
+                <div class="control">
+                  <button
+                    type="submit"
+                    className="button is-link is-success"
+                    onClick={this.onSubmit}
+                  >
+                    Submit
+                  </button>
+                </div>
+                <div class="control">
+                  <button
+                    class="button is-link is-danger is-light"
+                    onClick={() => this.setState({ open: false })}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                {message != "" && (
+                  <label
+                    style={{
+                      color: "red",
+                      paddingTop: "0.85rem",
+                      paddingRight: "2rem",
+                    }}
+                  >
+                    {message}
                   </label>
-                </div>
-                <div className="field text-input">
-                  <label className="label" style={{ width: "35%" }}>
-                    Member Name:
-                    <input
-                      className="input"
-                      type="text"
-                      name="name"
-                      onChange={this.onChange}
-                      required
-                    />
-                  </label>
-                </div>
-                <Record setPicture={this.setPicture} />
-              </section>
-              <footer class="modal-card-foot">
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button
-                      type="submit"
-                      className="button is-link is-success"
-                      // onClick={this.onSubmit}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                  <div class="control">
-                    <button
-                      class="button is-link is-danger is-light"
-                      onClick={() => this.setState({ open: false })}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                  {message != "" && (
-                    <label
-                      style={{
-                        color: "red",
-                        paddingTop: "0.85rem",
-                        paddingRight: "2rem"
-                      }}
-                    >
-                      {message}
-                    </label>
-                  )}
-                </div>
-              </footer>
-            </div>
-          </form>
+                )}
+              </div>
+            </footer>
+          </div>
         </Modal>
       </div>
     );

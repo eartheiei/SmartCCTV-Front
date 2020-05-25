@@ -15,7 +15,7 @@ export default class AreaManage extends Component {
       areaName: "",
       realRow: "",
       realColumn: "",
-      cam_id: 0
+      cam_id: 0,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -28,8 +28,11 @@ export default class AreaManage extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { blockNumber } = this.state
-    var col=0,row=0,pixelRow=0,pixelCol=0
+    const { blockNumber } = this.state;
+    var col = 0,
+      row = 0,
+      pixelRow = 0,
+      pixelCol = 0;
 
     if (this.state.status == 1) {
       col = Math.floor(blockNumber / 16);
@@ -41,7 +44,7 @@ export default class AreaManage extends Component {
       col = Math.floor(blockNumber / 24);
       row = Math.floor(blockNumber % 24);
     }
-    console.log(row,col)
+    console.log(row, col);
 
     if (this.state.status == 1) {
       pixelCol = 80 * col + 40;
@@ -61,17 +64,18 @@ export default class AreaManage extends Component {
       realColumn: parseInt(this.state.realColumn),
       pixelRow: pixelRow,
       pixelColumn: pixelCol,
-      cam_id: parseInt(this.props.id)
+      cam_id: parseInt(this.props.id),
+      block_num: blockNumber,
     };
 
-    console.log(block)
+    console.log(block);
 
     addBlock(block).then(console.log("Send!"));
   }
 
-  assignRealBlock = num => {
+  assignRealBlock = (num) => {
     this.setState({
-      blockNumber: num
+      blockNumber: num,
     });
   };
 

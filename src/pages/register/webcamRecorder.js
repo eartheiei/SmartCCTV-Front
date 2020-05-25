@@ -24,14 +24,12 @@ export default class Record extends React.Component {
     if (tab < 5) {
       temp[tab] = screenshot;
       base64[tab] = screenshot.split(',')[1];
-      console.log(screenshot.split(',')[1])
       this.setState({
         tab: num,
         picture: temp,
         base64Img: base64
       });
       this.props.setPicture(base64)
-      console.log(temp)
     }
   };
 

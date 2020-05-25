@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { searchVideo, uploadPicture } from "../../components/SearchFunctions";
-import Pagination from "./pagination";
+import Pagination from "./searchResult";
 import { Modal } from "react-bulma-components";
 import VerifyFace from "./verifyFace";
 
@@ -10,15 +10,17 @@ export default class SearchControl extends Component {
 
     this.state = {
       name: "",
+      user_id: "",
       picture: null,
+      pictureUrl: "",
       areaName: "",
       camera: "",
-      date: new Date(),
+      date: "",
       timeStart: "",
       timeEnd: "",
       result: [],
       warning: "",
-      open: false
+      open: false,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -35,6 +37,13 @@ export default class SearchControl extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  selectedPictureVerify = (id) => {
+    this.setState({
+      user_id: id,
+      warning: `User id: ${id}`,
+    });
+  };
+
   onChangePicture(e) {
     if (e.target.files[0]) {
       if (
@@ -44,11 +53,12 @@ export default class SearchControl extends Component {
       ) {
         this.setState({
           picture: e.target.files[0],
-          warning: "Please verify the image with database."
+          pictureUrl: URL.createObjectURL(e.target.files[0]),
+          warning: "Please verify the image with database.",
         });
       } else {
         this.setState({
-          warning: "Please select file type JPG or PNG."
+          warning: "Please select file type JPG or PNG.",
         });
       }
     }
@@ -56,7 +66,7 @@ export default class SearchControl extends Component {
 
   onClickVerify() {
     this.setState({
-      open: true
+      open: true,
     });
     const data = new FormData();
     data.append("file", this.state.picture);
@@ -68,17 +78,18 @@ export default class SearchControl extends Component {
 
     const search = {
       name: this.state.name,
+      user_id: this.state.user_id,
       picture: this.state.picture,
       areaName: this.state.areaName,
-      camera: this.state.camera
-      // date: this.state.date,
-      // timeStart: this.state.timeStart,
-      // timeEnd: this.state.timeEnd
+      camera: this.state.camera,
+      date: this.state.date,
+      timeStart: this.state.timeStart,
+      timeEnd: this.state.timeEnd,
     };
     console.log(search);
-    searchVideo(search).then(res => {
+    searchVideo(search).then((res) => {
       this.setState({
-        result: res
+        result: res,
       });
     });
   }
@@ -87,10 +98,13 @@ export default class SearchControl extends Component {
     this.setState({
       name: "",
       picture: null,
+      pictureUrl: "",
       areaName: "",
       camera: "",
-      date: new Date(),
-      time: ""
+      date: "",
+      timeStart: "",
+      timeEnd: "",
+      user_id:''
     });
   }
 
@@ -98,193 +112,198 @@ export default class SearchControl extends Component {
     const {
       name,
       picture,
+      pictureUrl,
       areaName,
       camera,
       date,
       time,
       result,
       warning,
-      open
+      open,
     } = this.state;
     const { status } = this.props;
     return (
       <div>
         <div>
-          <form onSubmit={this.onSubmit}>
-            <div className="columns">
-              <div class="column" style={{ marginLeft: "2rem" }}>
-                {status === "name" ? (
-                  <div class="field" style={{ display: "flex" }}>
+          {/* <form onSubmit={this.onSubmit}> */}
+          <div className="columns">
+            <div class="column" style={{ marginLeft: "2rem" }}>
+              {status === "name" ? (
+                <div class="field" style={{ display: "flex" }}>
+                  <label
+                    class="label"
+                    style={{ marginRight: "2rem", marginTop: "5px" }}
+                  >
+                    Name
+                  </label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Enter Name"
+                      name="name"
+                      value={name}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div style={{ display: "flex" }}>
                     <label
                       class="label"
-                      style={{ marginRight: "2rem", marginTop: "5px" }}
+                      style={{ marginRight: "1.5rem", marginTop: "5px" }}
                     >
-                      Name
+                      Picture
                     </label>
-                    <div class="control">
-                      <input
-                        class="input"
-                        type="text"
-                        placeholder="Enter Name"
-                        name="name"
-                        value={name}
-                        onChange={this.onChange}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <div style={{ display: "flex" }}>
-                      <label
-                        class="label"
-                        style={{ marginRight: "1.5rem", marginTop: "5px" }}
-                      >
-                        Picture
+                    <div class="file has-name is-fullwidth">
+                      <label class="file-label">
+                        <input
+                          class="file-input"
+                          type="file"
+                          name="picture"
+                          onChange={this.onChangePicture}
+                        />
+                        <span class="file-cta">
+                          <span class="file-label">Choose a file</span>
+                        </span>
+                        {picture && (
+                          <span class="file-name">{picture.name}</span>
+                        )}
                       </label>
-                      <div class="file has-name is-fullwidth">
-                        <label class="file-label">
-                          <input
-                            class="file-input"
-                            type="file"
-                            name="picture"
-                            onChange={this.onChangePicture}
-                          />
-                          <span class="file-cta">
-                            <span class="file-label">Choose a file</span>
-                          </span>
-                          {picture && (
-                            <span class="file-name">{picture.name}</span>
-                          )}
-                        </label>
-                      </div>
-                      {picture && (
-                        <button class="button" onClick={this.onClickVerify}>
-                          Verify
-                        </button>
-                      )}
                     </div>
-                    {!warning == "" ? (
-                      <label style={{ color: "red", paddingLeft: "4.9rem" }}>
-                        {warning}
-                      </label>
-                    ) : (
-                      <div style={{ marginBottom: "0.75rem" }} />
+                    {picture && (
+                      <button class="button" onClick={this.onClickVerify}>
+                        Verify
+                      </button>
                     )}
                   </div>
-                )}
-                <div
-                  class="field"
-                  style={
-                    !warning == ""
-                      ? { display: "flex", marginTop: "0.75rem" }
-                      : { display: "flex" }
-                  }
+                  {!warning == "" ? (
+                    <label style={{ color: "red", paddingLeft: "4.9rem" }}>
+                      {warning}
+                    </label>
+                  ) : (
+                    <div style={{ marginBottom: "0.75rem" }} />
+                  )}
+                </div>
+              )}
+              <div
+                class="field"
+                style={
+                  !warning == ""
+                    ? { display: "flex", marginTop: "0.75rem" }
+                    : { display: "flex" }
+                }
+              >
+                <label
+                  class="label"
+                  style={{ marginRight: "2.6rem", marginTop: "5px" }}
                 >
-                  <label
-                    class="label"
-                    style={{ marginRight: "2.6rem", marginTop: "5px" }}
-                  >
-                    Area
-                  </label>
-                  <div class="control">
-                    <input
-                      class="input"
-                      type="text"
-                      placeholder="Enter Area Name"
-                      name="areaName"
-                      value={areaName}
-                      onChange={this.onChange}
-                    />
-                  </div>
-                </div>
-                <div class="field" style={{ display: "flex" }}>
-                  <label
-                    class="label"
-                    style={{ marginRight: "1.2rem", marginTop: "5px" }}
-                  >
-                    Camera
-                  </label>
-                  <div class="control">
-                    <input
-                      class="input"
-                      type="text"
-                      placeholder="Enter Number of camera"
-                      name="camera"
-                      value={camera}
-                      onChange={this.onChange}
-                    />
-                  </div>
+                  Area
+                </label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="Enter Area Name"
+                    name="areaName"
+                    value={areaName}
+                    onChange={this.onChange}
+                  />
                 </div>
               </div>
-              <div class="column">
-                <div class="field" style={{ display: "flex" }}>
-                  <label
-                    class="label"
-                    style={{ marginRight: "1.9rem", marginTop: "5px" }}
-                  >
-                    Date
-                  </label>
+              <div class="field" style={{ display: "flex" }}>
+                <label
+                  class="label"
+                  style={{ marginRight: "1.2rem", marginTop: "5px" }}
+                >
+                  Camera
+                </label>
+                <div class="control">
                   <input
                     class="input"
-                    type="date"
-                    name="date"
-                    data-date-format="DD-MM-YYYY"
-                    value={date}
+                    type="text"
+                    placeholder="Enter Number of camera"
+                    name="camera"
+                    value={camera}
                     onChange={this.onChange}
-                    style={{ width: "35%" }}
-                    // required
-                  />
-                </div>
-                <div class="field" style={{ display: "flex" }}>
-                  <label
-                    class="label"
-                    style={{ marginRight: "1.8rem", marginTop: "5px" }}
-                  >
-                    Time start
-                  </label>
-                  <input
-                    class="input"
-                    type="time"
-                    name="timeStart"
-                    value={time}
-                    onChange={this.onChange}
-                    style={{ width: "30%" }}
-                    // required
-                  />
-                </div>
-                <div class="field" style={{ display: "flex" }}>
-                  <label
-                    class="label"
-                    style={{ marginRight: "1.8rem", marginTop: "5px" }}
-                  >
-                    Time end
-                  </label>
-                  <input
-                    class="input"
-                    type="time"
-                    name="timeEnd"
-                    value={time}
-                    onChange={this.onChange}
-                    style={{ width: "30%" }}
-                    // required
                   />
                 </div>
               </div>
             </div>
-            <div class="field is-grouped is-grouped-centered">
-              <div class="control">
-                <button class="button is-info" type="submit" value="submit">
-                  Search
-                </button>
+            <div class="column">
+              <div class="field" style={{ display: "flex" }}>
+                <label
+                  class="label"
+                  style={{ marginRight: "1.9rem", marginTop: "5px" }}
+                >
+                  Date
+                </label>
+                <input
+                  class="input"
+                  type="date"
+                  name="date"
+                  data-date-format="DD/MM/YYYY"
+                  value={date}
+                  onChange={this.onChange}
+                  style={{ width: "35%" }}
+                  // required
+                />
+              </div>
+              <div class="field" style={{ display: "flex" }}>
+                <label
+                  class="label"
+                  style={{ marginRight: "1.8rem", marginTop: "5px" }}
+                >
+                  Time start
+                </label>
+                <input
+                  class="input"
+                  type="time"
+                  name="timeStart"
+                  value={time}
+                  onChange={this.onChange}
+                  style={{ width: "30%" }}
+                  // required
+                />
+              </div>
+              <div class="field" style={{ display: "flex" }}>
+                <label
+                  class="label"
+                  style={{ marginRight: "1.8rem", marginTop: "5px" }}
+                >
+                  Time end
+                </label>
+                <input
+                  class="input"
+                  type="time"
+                  name="timeEnd"
+                  value={time}
+                  onChange={this.onChange}
+                  style={{ width: "30%" }}
+                  // required
+                />
               </div>
             </div>
-          </form>
+          </div>
+          <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+              <button
+                class="button is-info"
+                type="submit"
+                value="submit"
+                onClick={this.onSubmit}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          {/* </form> */}
         </div>
         <Modal
           show={open}
           onClose={() => this.setState({ open: false })}
           showClose={false}
-          closeOnBlur={true}
         >
           <div class="modal-card" style={{ width: "1000px" }}>
             <header class="modal-card-head">
@@ -297,7 +316,10 @@ export default class SearchControl extends Component {
             </header>
             <section class="modal-card-body">
               <label class="label">Please verify the face with database.</label>
-              <VerifyFace picture={picture} />
+              <VerifyFace
+                pictureUrl={pictureUrl}
+                selectedId={this.selectedPictureVerify}
+              />
             </section>
             <footer
               class="modal-card-foot"

@@ -29,9 +29,15 @@ export const addBlock = block => {
     realColumn: block.realColumn,
     pixelRow: block.pixelRow,
     pixelColumn: block.pixelColumn,
-    cam_id: block.cam_id
+    cam_id: block.cam_id,
+    block_num: block.block_num
   })
   .then(res =>{
     console.log("Done!")
   })
+}
+
+export const deleteCam = id => {
+  return axios
+  .post("settings/delete",{cam_id:id})
 }

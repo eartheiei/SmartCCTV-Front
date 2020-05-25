@@ -32,7 +32,7 @@ export default class Login extends Component {
 
     login(user).then(res => {
       if (res) {
-        this.props.history.push(`/homepage`);
+        this.props.history.push(`/livecam`);
       } else {
         this.setState({
           message: "Login failed! Plaese check your email."
